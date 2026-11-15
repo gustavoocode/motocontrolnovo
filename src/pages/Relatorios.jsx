@@ -36,7 +36,7 @@ export default function Relatorios() {
     const l = [['Tipo', 'Data', 'Descrição', 'Categoria ou plataforma', 'Valor (R$)', 'Gorjeta (R$)']];
     [...g.map((i) => ['Ganho', i.data, i.descricao || '', i.plataforma, valorTxt(i.valor), valorTxt(i.gorjeta || 0)]),
      ...x.map((i) => ['Despesa', i.data, i.descricao || '', i.categoria, valorTxt(i.valor), '']),
-     ...d.r.filter(dentro).map((i) => ['Salário recebido', i.data, `Lanches descontados: ${valorTxt(i.descontoLanches)}`, '', valorTxt(i.valor), ''])].sort((a, b) => a[1].localeCompare(b[1])).forEach((r) => l.push(r));
+     ...d.r.filter(dentro).map((i) => ['Salário recebido', i.data, i.obs || '', '', valorTxt(i.valor), ''])].sort((a, b) => a[1].localeCompare(b[1])).forEach((r) => l.push(r));
     const texto = '\ufeff' + l.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(';')).join('\r\n');
     try { await entregar(new File([texto], `motocontrol-${ini}-a-${fim}.csv`, { type: 'text/csv' })); } catch { /* cancelado */ }
   }

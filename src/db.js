@@ -17,8 +17,13 @@ db.version(2).stores({
   lanches: '++id, data, recebimentoId',
   recebimentos: '++id, data',
 });
+db.version(3).stores({ periodos: '++id, fim' }).upgrade(async (tx) => {
+  // Dados da versão anterior ficam como período já encerrado.
+  await tx.table('recebimentos').toCollection().modify({ fechado: true });
+  await tx.table('lanches').toCollection().modify((l) => { if (l.recebimentoId) l.fechado = true; });
+});
 
-const TABELAS = ['ganhos', 'despesas', 'abastecimentos', 'manutencoes', 'kms', 'moto', 'metas', 'config', 'salario', 'lanches', 'recebimentos'];
+const TABELAS = ['ganhos', 'despesas', 'abastecimentos', 'manutencoes', 'kms', 'moto', 'metas', 'config', 'salario', 'lanches', 'recebimentos', 'periodos'];
 
 export async function exportarBackup() {
   const dados = {};

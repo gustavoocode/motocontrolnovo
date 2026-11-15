@@ -54,8 +54,6 @@ export default function Inicio() {
       <SalarioResumo />
       <MetaDia />
       <Alertas />
-      <Painel />
-
       <h2>Hoje</h2>
       {lancamentos.length === 0 ? (
         <p className="mudo">Nenhum lançamento hoje. Toque em + para registrar.</p>
@@ -69,6 +67,8 @@ export default function Inicio() {
           ))}
         </ul>
       )}
+
+      <Painel />
     </>
   );
 }
